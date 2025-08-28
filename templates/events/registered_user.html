@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registered List</title>
+    <style>
+      /* General Body Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    font-size: 16px;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #007bff;
+    color: #fff;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #e0e0e0;
+    cursor: pointer;
+}
+
+/* Action Link Styling */
+td a {
+    color: #007bff;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+td a:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+td a:active {
+    background-color: #0056b3;
+}
+
+/* Empty Row Styling */
+.empty-row {
+    text-align: center;
+    color: #999;
+    font-style: italic;
+}
+
+/* Back to Home Link Styling */
+a {
+    display: block;
+    text-align: center;
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    width: 200px;
+    margin: 20px auto;
+    transition: background-color 0.3s;
+}
+
+a:hover {
+    background-color: #218838;
+}
+
+    </style>
+</head>
+<body>
+
+<h1>Registered Users</h1>
+
+<table>
+    <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for user in registered_users %}
+    <tr>
+        <td>{{ forloop.counter }}</td> <!-- Serial Number -->
+        <td>{{ user.name }}</td>  <!-- Assuming 'name' is a field in your model -->
+        <td>{{ user.email }}</td> <!-- Assuming 'email' is a field in your model -->
+        <td>{{ user.phone }}</td> <!-- Assuming 'phone' is a field in your model -->
+        <td>
+            <a href="{% url 'edit_user' user.id %}">Edit</a> | 
+            <a href="{% url 'delete_user' user.id %}" onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="5">No users registered yet.</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+<a href="{% url 'home' %}">Back to Home</a>
+
+</body>
+</html>
